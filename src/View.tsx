@@ -1,27 +1,15 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo } from "react";
 import { useQuery } from "@apollo/client";
 import { SEARCH_REPOSITORIES } from "./graphql";
+import { Variables } from "./App";
 
-type Variables = {
-  first: number | null;
-  last: number | null;
-  before: number | null;
-  after: number | null;
-  query: string;
+type Props = {
+  variables: Variables;
 };
 
-const VARIABLES: Variables = {
-  first: 5,
-  last: null,
-  before: null,
-  after: null,
-  query: "フロントエンドエンジニア",
-};
-
-const View: FC = () => {
-  const [searchVars] = useState<Variables>(VARIABLES); // TODO: イケてる書き方を探す
+const View: FC<Props> = ({ variables }) => {
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, {
-    variables: searchVars,
+    variables,
   });
 
   if (loading) {
@@ -31,7 +19,7 @@ const View: FC = () => {
     return <div>Error! {error.message}</div>;
   }
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <div>View</div>;
 };
 
-export default View;
+export default memo(View);
