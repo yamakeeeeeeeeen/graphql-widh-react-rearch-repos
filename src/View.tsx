@@ -2,7 +2,7 @@ import React, { FC, memo } from "react";
 import { useQuery } from "@apollo/client";
 import { SEARCH_REPOSITORIES } from "./graphql";
 import { Variables } from "./App";
-import { RepositoryCount } from "./Components";
+import { RepositoryCount, SearchResults } from "./Components";
 
 type Props = {
   variables: Variables;
@@ -12,6 +12,7 @@ const View: FC<Props> = ({ variables }) => {
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, {
     variables,
   });
+  const search = data?.search;
 
   if (loading) {
     return <div>Loading...</div>;
@@ -22,7 +23,8 @@ const View: FC<Props> = ({ variables }) => {
 
   return (
     <>
-      <RepositoryCount repositoryCount={data.search.repositoryCount} />
+      <RepositoryCount repositoryCount={search.repositoryCount} />
+      <SearchResults edges={search.edges} />
     </>
   );
 };
