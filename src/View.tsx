@@ -1,14 +1,6 @@
 import React, { FC } from "react";
-import { gql, useQuery } from "@apollo/client";
-
-const ME = gql`
-  query me {
-    user(login: "yamakeeeeeeeeen") {
-      bio
-      avatarUrl
-    }
-  }
-`;
+import { useQuery } from "@apollo/client";
+import { ME } from "./graphql";
 
 const View: FC = () => {
   const { loading, error, data } = useQuery(ME);
