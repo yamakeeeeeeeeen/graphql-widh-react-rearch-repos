@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
 
 const ME = gql`
@@ -10,13 +10,17 @@ const ME = gql`
   }
 `;
 
-const View = () => {
+const View: FC = () => {
   const { loading, error, data } = useQuery(ME);
 
-  if (loading) return <div>Loding...</div>;
-  if (error) return <div>Error! {error.message}</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error! {error.message}</div>;
+  }
 
-  return <div>{data ? <div>{data.user.bio}</div> : null}</div>;
+  return <div>{data ? <>{data.user.bio}</> : null}</div>;
 };
 
 export default View;
