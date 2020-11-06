@@ -1,8 +1,8 @@
-import React, { createRef, FC, useState } from "react";
-import { ApolloProvider } from "@apollo/react-hooks";
-import client from "./client";
-import { View } from "./Components";
-import { PER_PAGE } from "./constants";
+import React, { createRef, FC, useState } from 'react';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './client';
+import { View } from './Components';
+import { PER_PAGE } from './constants';
 
 export type Variables = {
   first: number | null;
@@ -17,7 +17,7 @@ const VARIABLES: Variables = {
   last: null,
   before: null,
   after: null,
-  query: "",
+  query: '',
 };
 
 const App: FC = () => {

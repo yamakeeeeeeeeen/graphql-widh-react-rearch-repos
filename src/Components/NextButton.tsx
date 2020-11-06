@@ -1,7 +1,7 @@
-import React, { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
-import { Search } from "./View";
-import { Variables } from "../App";
-import { PER_PAGE } from "../constants";
+import React, { Dispatch, FC, memo, SetStateAction, useCallback } from 'react';
+import { Search } from './View';
+import { Variables } from '../App';
+import { PER_PAGE } from '../constants';
 
 type Props = {
   setVariables: Dispatch<SetStateAction<Variables>>;
@@ -21,7 +21,7 @@ const NextButton: FC<Props> = ({ setVariables, query, search, disabled }) => {
         query,
       });
     },
-    [setVariables, query]
+    [setVariables, query],
   );
 
   return (

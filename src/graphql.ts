@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const ME = gql`
   query me {
@@ -10,21 +10,8 @@ const ME = gql`
 `;
 
 const SEARCH_REPOSITORIES = gql`
-  query searhRepositories(
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-    $query: String!
-  ) {
-    search(
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-      query: $query
-      type: REPOSITORY
-    ) {
+  query searhRepositories($first: Int, $after: String, $last: Int, $before: String, $query: String!) {
+    search(first: $first, after: $after, last: $last, before: $before, query: $query, type: REPOSITORY) {
       repositoryCount
       pageInfo {
         endCursor

@@ -1,7 +1,7 @@
-import React, { Dispatch, FC, memo, SetStateAction, useCallback } from "react";
-import { PER_PAGE } from "../constants";
-import { Variables } from "../App";
-import { Search } from "./View";
+import React, { Dispatch, FC, memo, SetStateAction, useCallback } from 'react';
+import { PER_PAGE } from '../constants';
+import { Variables } from '../App';
+import { Search } from './View';
 
 type Props = {
   setVariables: Dispatch<SetStateAction<Variables>>;
@@ -10,12 +10,7 @@ type Props = {
   disabled: boolean;
 };
 
-const PreviousButton: FC<Props> = ({
-  setVariables,
-  query,
-  search,
-  disabled,
-}) => {
+const PreviousButton: FC<Props> = ({ setVariables, query, search, disabled }) => {
   const goPrevious = useCallback(
     (search) => {
       setVariables({
@@ -26,7 +21,7 @@ const PreviousButton: FC<Props> = ({
         query,
       });
     },
-    [setVariables, query]
+    [setVariables, query],
   );
 
   return (

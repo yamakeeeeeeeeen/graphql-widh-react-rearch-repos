@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 const END_POINT = process.env.REACT_APP_END_POINT;
