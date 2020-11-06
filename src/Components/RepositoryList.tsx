@@ -1,6 +1,6 @@
 import React, { FC, memo } from 'react';
 import { StarButton } from './index';
-import { Variables } from '../App';
+import { Variables } from './View';
 
 type Props = {
   variables: Variables;

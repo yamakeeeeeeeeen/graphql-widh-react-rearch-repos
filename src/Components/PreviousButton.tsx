@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, memo, SetStateAction, useCallback } from 'react';
 import { PER_PAGE } from '../constants';
-import { Variables } from '../App';
+import { Variables } from './View';
 import { Search } from './View';
 
 type Props = {

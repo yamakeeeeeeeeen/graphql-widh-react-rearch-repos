@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, memo, SetStateAction } from 'react';
 import { NextButton, PreviousButton } from './index';
 import { Search, AroundPageInfo } from './View';
-import { Variables } from '../App';
+import { Variables } from './View';
 
 type Props = {
   setVariables: Dispatch<SetStateAction<Variables>>;

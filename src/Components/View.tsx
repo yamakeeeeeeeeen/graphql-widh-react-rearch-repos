@@ -1,12 +1,15 @@
-import React, { Dispatch, FC, memo, SetStateAction } from 'react';
+import React, { FC, memo, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { Variables } from '../App';
-import { Buttons, RepositoryCount, RepositoryList } from './index';
+import { Buttons, Form, RepositoryCount, RepositoryList } from './index';
 import { SEARCH_REPOSITORIES } from '../graphql';
+import { PER_PAGE } from '../constants';
 
-type Props = {
-  variables: Variables;
-  setVariables: Dispatch<SetStateAction<Variables>>;
+export type Variables = {
+  first: number | null;
+  last: number | null;
+  before: number | null;
+  after: number | null;
+  query: string;
 };
 export type Search = {
   edges: any[];
@@ -25,11 +28,20 @@ export type AroundPageInfo = {
   hasPreviousPage: boolean | undefined;
 };
 
-const View: FC<Props> = ({ variables, setVariables }) => {
+const VARIABLES: Variables = {
+  first: PER_PAGE,
+  last: null,
+  before: null,
+  after: null,
+  query: '',
+};
+
+const View: FC = () => {
+  const [searchVars, setSearchVars] = useState<Variables>(VARIABLES);
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, {
-    variables,
+    variables: searchVars,
   });
-  const { query } = variables;
+  const { query } = searchVars;
   const search: Search = data?.search;
 
   const hasPreviousPage = search?.pageInfo?.hasPreviousPage;
@@ -48,10 +60,11 @@ const View: FC<Props> = ({ variables, setVariables }) => {
 
   return (
     <>
+      <Form variables={searchVars} setVariables={setSearchVars} />
       <RepositoryCount repositoryCount={search.repositoryCount} />
-      <RepositoryList variables={variables} edges={search.edges} />
+      <RepositoryList variables={searchVars} edges={search.edges} />
       {hasPreviousPage !== undefined || hasNextPage !== undefined ? (
-        <Buttons setVariables={setVariables} query={query} search={search} AroundPageInfo={AroundPageInfo} />
+        <Buttons setVariables={setSearchVars} query={query} search={search} AroundPageInfo={AroundPageInfo} />
       ) : null}
     </>
   );

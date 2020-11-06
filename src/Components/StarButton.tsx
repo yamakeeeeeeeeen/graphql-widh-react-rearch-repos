@@ -1,7 +1,7 @@
 import React, { FC, memo, useMemo } from 'react';
 import { useMutation } from '@apollo/client';
 import { Node } from './RepositoryList';
-import { Variables } from '../App';
+import { Variables } from './View';
 import { ADD_STAR, REMOVE_STAR, SEARCH_REPOSITORIES } from '../graphql';
 
 type Props = {
