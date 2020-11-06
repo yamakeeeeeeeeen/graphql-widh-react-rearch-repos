@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { createRef, FC, useState } from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./client";
 import { View } from "./Components";
@@ -17,30 +17,26 @@ const VARIABLES: Variables = {
   last: null,
   before: null,
   after: null,
-  query: "フロントエンドエンジニア",
+  query: "",
 };
 
 const App: FC = () => {
   const [searchVars, setSearchVars] = useState<Variables>(VARIABLES);
-  const { query } = searchVars;
+  const formRef = createRef<any>();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    setSearchVars({
+      ...searchVars,
+      query: formRef.current.value,
+    });
   };
-  const handleChange = useCallback(
-    (event) => {
-      setSearchVars({
-        ...searchVars,
-        query: event.target.value,
-      });
-    },
-    [searchVars, setSearchVars]
-  );
 
   return (
     <ApolloProvider client={client}>
       <form onSubmit={handleSubmit}>
-        <input value={query} onChange={handleChange} />
+        <input ref={formRef} />
+        <input value="Search" type="submit" />
       </form>
       <View variables={searchVars} setVariables={setSearchVars} />
     </ApolloProvider>
