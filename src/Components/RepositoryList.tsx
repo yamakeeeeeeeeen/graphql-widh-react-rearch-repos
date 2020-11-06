@@ -4,7 +4,7 @@ type Props = {
   edges: any[];
 };
 
-const SearchResults: FC<Props> = ({ edges }) => (
+const RepositoryList: FC<Props> = ({ edges }) => (
   <ul>
     {edges.map((edge: any) => {
       const node = edge.node;
@@ -19,4 +19,4 @@ const SearchResults: FC<Props> = ({ edges }) => (
   </ul>
 );
 
-export default memo(SearchResults);
+export default memo(RepositoryList);

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./client";
-import View from "./View";
+import { View } from "./Components";
 
 export type Variables = {
   first: number | null;
@@ -11,8 +11,9 @@ export type Variables = {
   query: string;
 };
 
+const PER_PAGE = 5;
 const VARIABLES: Variables = {
-  first: 5,
+  first: PER_PAGE,
   last: null,
   before: null,
   after: null,
@@ -41,7 +42,7 @@ const App: FC = () => {
       <form onSubmit={handleSubmit}>
         <input value={query} onChange={handleChange} />
       </form>
-      <View variables={searchVars} />
+      <View variables={searchVars} setVariables={setSearchVars} />
     </ApolloProvider>
   );
 };

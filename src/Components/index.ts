@@ -1,4 +1,7 @@
+import Buttons from "./Buttons";
+import NextButton from "./NextButton";
 import RepositoryCount from "./RepositoryCount";
-import SearchResults from "./SearchResults";
+import RepositoryList from "./RepositoryList";
+import View from "./View";
 
-export { RepositoryCount, SearchResults };
+export { Buttons, NextButton, RepositoryCount, RepositoryList, View };
