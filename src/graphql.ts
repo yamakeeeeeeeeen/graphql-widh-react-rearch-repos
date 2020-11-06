@@ -50,4 +50,15 @@ const SEARCH_REPOSITORIES = gql`
   }
 `;
 
-export { SEARCH_REPOSITORIES, ME };
+const ADD_STAR = gql`
+  mutation addStar($input: AddStarInput!) {
+    addStar(input: $input) {
+      starrable {
+        id
+        viewerHasStarred
+      }
+    }
+  }
+`;
+
+export { SEARCH_REPOSITORIES, ME, ADD_STAR };
