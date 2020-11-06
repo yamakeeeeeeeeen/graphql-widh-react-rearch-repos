@@ -61,4 +61,15 @@ const ADD_STAR = gql`
   }
 `;
 
-export { SEARCH_REPOSITORIES, ME, ADD_STAR };
+const REMOVE_STAR = gql`
+  mutation removeStar($input: RemoveStarInput!) {
+    removeStar(input: $input) {
+      starrable {
+        id
+        viewerHasStarred
+      }
+    }
+  }
+`;
+
+export { SEARCH_REPOSITORIES, ME, ADD_STAR, REMOVE_STAR };
