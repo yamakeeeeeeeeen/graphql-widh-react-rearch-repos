@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./client";
 import { View } from "./Components";
+import { PER_PAGE } from "./constants";
 
 export type Variables = {
   first: number | null;
@@ -11,7 +12,6 @@ export type Variables = {
   query: string;
 };
 
-const PER_PAGE = 5;
 const VARIABLES: Variables = {
   first: PER_PAGE,
   last: null,

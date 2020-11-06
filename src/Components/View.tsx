@@ -20,6 +20,10 @@ export type Search = {
   repositoryCount: number;
   __typename: string;
 };
+export type AroundPageInfo = {
+  hasNextPage: boolean | undefined;
+  hasPreviousPage: boolean | undefined;
+};
 
 const View: FC<Props> = ({ variables, setVariables }) => {
   const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, {
@@ -27,7 +31,13 @@ const View: FC<Props> = ({ variables, setVariables }) => {
   });
   const { query } = variables;
   const search: Search = data?.search;
+
+  const hasPreviousPage = search?.pageInfo?.hasPreviousPage;
   const hasNextPage = search?.pageInfo?.hasNextPage;
+  const AroundPageInfo: AroundPageInfo = {
+    hasPreviousPage,
+    hasNextPage,
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -40,12 +50,12 @@ const View: FC<Props> = ({ variables, setVariables }) => {
     <>
       <RepositoryCount repositoryCount={search.repositoryCount} />
       <RepositoryList edges={search.edges} />
-      {hasNextPage !== undefined ? (
+      {hasPreviousPage !== undefined || hasNextPage !== undefined ? (
         <Buttons
           setVariables={setVariables}
           query={query}
           search={search}
-          hasNextPage={hasNextPage}
+          AroundPageInfo={AroundPageInfo}
         />
       ) : null}
     </>
