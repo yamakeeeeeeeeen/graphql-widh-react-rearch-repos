@@ -26,12 +26,55 @@ const StarButton: FC<Props> = ({ variables, node }) => {
         starrableId: node.id,
       },
     },
-    refetchQueries: [
-      {
+    // NOTE: キャッシュを書き換えるパターン
+    update: (cache, { data: { addStar, removeStar } }) => {
+      const { starrable } = addStar || removeStar;
+      // NOTE: dataに入っているのはInMemoryCacheでキャッシュされたデータ
+      const data: any = cache.readQuery({
         query: SEARCH_REPOSITORIES,
         variables,
-      },
-    ],
+      });
+      const edges = data.search.edges;
+      const newEdges = edges.map((edge: any) => {
+        let newEdge = { ...edge };
+
+        if (newEdge.node.id === node.id) {
+          const totalCount = newEdge.node.stargazers.totalCount;
+          const diff = starrable.viewerHasStarred ? 1 : -1;
+
+          newEdge = {
+            node: {
+              ...edge.node,
+              stargazers: {
+                ...edge.node.stargazers,
+                totalCount: totalCount + diff,
+              },
+            },
+          };
+        }
+        return newEdge;
+      });
+
+      const newData = {
+        search: {
+          ...data.search,
+          edges: [...newEdges],
+        },
+      };
+
+      cache.writeQuery({
+        query: SEARCH_REPOSITORIES,
+        data: newData,
+      });
+    },
+
+    // NOTE: refetchするパターン
+    // refetchQueries: [
+    //   {
+    //     query: SEARCH_REPOSITORIES,
+    //     variables,
+    //   },
+    // ],
   });
 
   return (
