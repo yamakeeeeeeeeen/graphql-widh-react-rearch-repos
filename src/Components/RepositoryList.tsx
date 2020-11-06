@@ -1,7 +1,9 @@
 import React, { FC, memo } from "react";
 import { StarButton } from "./index";
+import { Variables } from "../App";
 
 type Props = {
+  variables: Variables;
   edges: any[];
 };
 export type Node = {
@@ -16,7 +18,7 @@ export type Node = {
   __typename: string;
 };
 
-const RepositoryList: FC<Props> = ({ edges }) => (
+const RepositoryList: FC<Props> = ({ variables, edges }) => (
   <ul>
     {edges.map((edge: any) => {
       const node: Node = edge.node;
@@ -26,7 +28,7 @@ const RepositoryList: FC<Props> = ({ edges }) => (
             {node.name}
           </a>
           -
-          <StarButton node={node} />
+          <StarButton variables={variables} node={node} />
         </li>
       );
     })}

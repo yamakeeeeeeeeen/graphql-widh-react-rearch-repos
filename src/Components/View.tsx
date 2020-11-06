@@ -1,8 +1,8 @@
 import React, { Dispatch, FC, memo, SetStateAction } from "react";
 import { useQuery } from "@apollo/client";
-import { SEARCH_REPOSITORIES } from "../graphql";
 import { Variables } from "../App";
 import { Buttons, RepositoryCount, RepositoryList } from "./index";
+import { SEARCH_REPOSITORIES } from "../graphql";
 
 type Props = {
   variables: Variables;
@@ -49,7 +49,7 @@ const View: FC<Props> = ({ variables, setVariables }) => {
   return (
     <>
       <RepositoryCount repositoryCount={search.repositoryCount} />
-      <RepositoryList edges={search.edges} />
+      <RepositoryList variables={variables} edges={search.edges} />
       {hasPreviousPage !== undefined || hasNextPage !== undefined ? (
         <Buttons
           setVariables={setVariables}

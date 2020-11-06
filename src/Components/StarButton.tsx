@@ -1,13 +1,15 @@
 import React, { FC, memo, useMemo } from "react";
 import { useMutation } from "@apollo/client";
 import { Node } from "./RepositoryList";
-import { ADD_STAR, REMOVE_STAR } from "../graphql";
+import { Variables } from "../App";
+import { ADD_STAR, REMOVE_STAR, SEARCH_REPOSITORIES } from "../graphql";
 
 type Props = {
+  variables: Variables;
   node: Node;
 };
 
-const StarButton: FC<Props> = ({ node }) => {
+const StarButton: FC<Props> = ({ variables, node }) => {
   const totalCount = node.stargazers.totalCount;
   const viewerHasStarred = node.viewerHasStarred;
   const starCount = useMemo(
@@ -24,6 +26,12 @@ const StarButton: FC<Props> = ({ node }) => {
         starrableId: node.id,
       },
     },
+    refetchQueries: [
+      {
+        query: SEARCH_REPOSITORIES,
+        variables,
+      },
+    ],
   });
 
   return (
