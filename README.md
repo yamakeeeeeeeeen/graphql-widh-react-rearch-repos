@@ -4,9 +4,7 @@
 
 - react (17.0.1)
 - typescript (4.0.3)
-- graphql (14.0.2)
-- react-apollo (2.1.11)
-- @apollo/client (3.2.5)
+- @apollo/react-hooks (4.0.0)
 
 ## Setup
 
