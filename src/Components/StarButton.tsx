@@ -1,5 +1,5 @@
 import React, { FC, memo, useMemo } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/react-hooks';
 import { Node } from './RepositoryList';
 import { Variables } from './View';
 import { ADD_STAR, REMOVE_STAR, SEARCH_REPOSITORIES } from '../graphql';

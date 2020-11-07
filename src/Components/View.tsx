@@ -1,5 +1,5 @@
 import React, { FC, memo, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/react-hooks';
 import { Buttons, Form, RepositoryCount, RepositoryList } from './index';
 import { SEARCH_REPOSITORIES } from '../graphql';
 import { PER_PAGE } from '../constants';
