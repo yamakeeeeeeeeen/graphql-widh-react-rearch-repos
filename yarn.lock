@@ -1993,11 +1993,6 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@octokit/graphql-schema@^10.2.1":
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/@octokit/graphql-schema/-/graphql-schema-10.2.1.tgz#e3a6eceb223068ce92f7c66221c6d2f0602d6614"
-  integrity sha512-14nmxiPzieqiAsrq6rKq67US0zqi/41+EJJjPA72SaYdhi0pflvpDcH+h/BA3PpUHM3QyoGisIwfNZuPhR3VOw==
-
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.2.tgz#1f9741e0bde9790a0e13272082ed7272a083620d"
