@@ -1,10 +1,10 @@
 import React, { Dispatch, FC, memo, SetStateAction, useCallback } from 'react';
-import { PER_PAGE } from '../constants';
-import { Variables } from './View';
-import { Search } from './View';
+import { PER_PAGE } from '../../constants';
+import { SearchRepositoriesQueryVariables } from '../../client/gen/graphql-client-api';
+import { Search } from '../../@types/graphql';
 
 type Props = {
-  setVariables: Dispatch<SetStateAction<Variables>>;
+  setVariables: Dispatch<SetStateAction<SearchRepositoriesQueryVariables>>;
   query: string;
   search: Search;
   disabled: boolean;

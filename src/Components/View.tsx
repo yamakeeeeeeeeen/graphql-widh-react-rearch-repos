@@ -1,34 +1,14 @@
 import React, { FC, memo, useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { Buttons, Form, RepositoryCount, RepositoryList } from './index';
-import { SEARCH_REPOSITORIES } from '../graphql';
+import { useSearchRepositoriesQuery, SearchRepositoriesQueryVariables } from '../client/gen/graphql-client-api';
+import { PaginationButtons, Form, RepositoryCount, RepositoryList } from './index';
 import { PER_PAGE } from '../constants';
 
-export type Variables = {
-  first: number | null;
-  last: number | null;
-  before: number | null;
-  after: number | null;
-  query: string;
-};
-export type Search = {
-  edges: any[];
-  pageInfo: {
-    __typename: string;
-    endCursor: string;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor: string;
-  };
-  repositoryCount: number;
-  __typename: string;
-};
 export type AroundPageInfo = {
   hasNextPage: boolean | undefined;
   hasPreviousPage: boolean | undefined;
 };
 
-const VARIABLES: Variables = {
+const INITIAL_VARIABLES: SearchRepositoriesQueryVariables = {
   first: PER_PAGE,
   last: null,
   before: null,
@@ -37,12 +17,15 @@ const VARIABLES: Variables = {
 };
 
 const View: FC = () => {
-  const [searchVars, setSearchVars] = useState<Variables>(VARIABLES);
-  const { loading, error, data } = useQuery(SEARCH_REPOSITORIES, {
+  const [searchVars, setSearchVars] = useState<SearchRepositoriesQueryVariables>(INITIAL_VARIABLES);
+  const { data, error, loading } = useSearchRepositoriesQuery({
     variables: searchVars,
   });
+
   const { query } = searchVars;
-  const search: Search = data?.search;
+  const search = data?.search;
+  const repositoryCount = search?.repositoryCount;
+  const edges = search?.edges;
 
   const hasPreviousPage = search?.pageInfo?.hasPreviousPage;
   const hasNextPage = search?.pageInfo?.hasNextPage;
@@ -61,10 +44,10 @@ const View: FC = () => {
   return (
     <>
       <Form variables={searchVars} setVariables={setSearchVars} />
-      <RepositoryCount repositoryCount={search.repositoryCount} />
-      <RepositoryList variables={searchVars} edges={search.edges} />
+      <RepositoryCount repositoryCount={repositoryCount} />
+      <RepositoryList variables={searchVars} edges={edges} />
       {hasPreviousPage !== undefined || hasNextPage !== undefined ? (
-        <Buttons setVariables={setSearchVars} query={query} search={search} AroundPageInfo={AroundPageInfo} />
+        <PaginationButtons setVariables={setSearchVars} query={query} search={search} AroundPageInfo={AroundPageInfo} />
       ) : null}
     </>
   );

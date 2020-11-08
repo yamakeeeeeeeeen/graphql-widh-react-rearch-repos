@@ -1,10 +1,10 @@
-import Buttons from './Buttons';
+import PaginationButtons from './Buttons/PaginationButtons';
 import Form from './Form';
-import NextButton from './NextButton';
-import PreviousButton from './PreviousButton';
+import NextButton from './Buttons/NextButton';
+import PreviousButton from './Buttons/PreviousButton';
 import RepositoryCount from './RepositoryCount';
 import RepositoryList from './RepositoryList';
-import StarButton from './StarButton';
+import StarButton from './Buttons/StarButton';
 import View from './View';
 
-export { Buttons, Form, NextButton, PreviousButton, RepositoryCount, RepositoryList, StarButton, View };
+export { PaginationButtons, Form, NextButton, PreviousButton, RepositoryCount, RepositoryList, StarButton, View };

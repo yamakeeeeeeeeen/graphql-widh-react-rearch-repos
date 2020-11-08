@@ -1,16 +1,17 @@
 import React, { Dispatch, FC, memo, SetStateAction } from 'react';
-import { NextButton, PreviousButton } from './index';
-import { Search, AroundPageInfo } from './View';
-import { Variables } from './View';
+import { NextButton, PreviousButton } from '../index';
+import { AroundPageInfo } from '../View';
+import { SearchRepositoriesQueryVariables } from '../../client/gen/graphql-client-api';
+import { Search } from '../../@types/graphql';
 
 type Props = {
-  setVariables: Dispatch<SetStateAction<Variables>>;
+  setVariables: Dispatch<SetStateAction<SearchRepositoriesQueryVariables>>;
   query: string;
   search: Search;
   AroundPageInfo: AroundPageInfo;
 };
 
-const Buttons: FC<Props> = ({ setVariables, query, search, AroundPageInfo }) => {
+const PaginationButtons: FC<Props> = ({ setVariables, query, search, AroundPageInfo }) => {
   const { hasPreviousPage, hasNextPage } = AroundPageInfo;
 
   return (
@@ -21,4 +22,4 @@ const Buttons: FC<Props> = ({ setVariables, query, search, AroundPageInfo }) => 
   );
 };
 
-export default memo(Buttons);
+export default memo(PaginationButtons);

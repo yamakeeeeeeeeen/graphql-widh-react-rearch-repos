@@ -1,20 +1,27 @@
 import React, { FC, memo, useMemo } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Node } from './RepositoryList';
-import { Variables } from './View';
-import { ADD_STAR, REMOVE_STAR, SEARCH_REPOSITORIES } from '../graphql';
+import {
+  AddStarDocument,
+  RemoveStarDocument,
+  SearchRepositoriesDocument,
+  SearchRepositoriesQueryVariables,
+} from '../../client/gen/graphql-client-api';
+import { RepositoryTypeNode } from '../../@types/graphql';
 
 type Props = {
-  variables: Variables;
-  node: Node;
+  variables: SearchRepositoriesQueryVariables;
+  node: RepositoryTypeNode; // TODO: 型修正
 };
 
 const StarButton: FC<Props> = ({ variables, node }) => {
   const totalCount = node.stargazers.totalCount;
   const viewerHasStarred = node.viewerHasStarred;
-  const starCount = useMemo(() => (totalCount === 1 ? '1 star' : `${totalCount} stars`), [totalCount]);
-  const ADD_OR_REMOVE_STAR = useMemo(() => (viewerHasStarred ? REMOVE_STAR : ADD_STAR), [viewerHasStarred]);
-  const [addOrRemoveStar] = useMutation(ADD_OR_REMOVE_STAR, {
+  const starCount = useMemo<string>(() => (totalCount === 1 ? '1 star' : `${totalCount} stars`), [totalCount]);
+
+  const AddOrRemoveStarDocument = useMemo(() => (viewerHasStarred ? RemoveStarDocument : AddStarDocument), [
+    viewerHasStarred,
+  ]);
+  const [addOrRemoveStar] = useMutation(AddOrRemoveStarDocument, {
     variables: {
       input: {
         starrableId: node.id,
@@ -25,7 +32,7 @@ const StarButton: FC<Props> = ({ variables, node }) => {
       const { starrable } = addStar || removeStar;
       // NOTE: dataに入っているのはInMemoryCacheでキャッシュされたデータ
       const data: any = cache.readQuery({
-        query: SEARCH_REPOSITORIES,
+        query: SearchRepositoriesDocument,
         variables,
       });
       const edges = data.search.edges;
@@ -57,18 +64,18 @@ const StarButton: FC<Props> = ({ variables, node }) => {
       };
 
       cache.writeQuery({
-        query: SEARCH_REPOSITORIES,
+        query: SearchRepositoriesDocument,
         data: newData,
       });
     },
 
     // NOTE: refetchするパターン
-    // refetchQueries: [
-    //   {
-    //     query: SEARCH_REPOSITORIES,
-    //     variables,
-    //   },
-    // ],
+    refetchQueries: [
+      {
+        query: SearchRepositoriesDocument,
+        variables,
+      },
+    ],
   });
 
   return (

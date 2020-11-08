@@ -1,9 +1,9 @@
 import React, { createRef, Dispatch, FC, SetStateAction } from 'react';
-import { Variables } from './View';
+import { SearchRepositoriesQueryVariables } from '../client/gen/graphql-client-api';
 
 type Props = {
-  variables: Variables;
-  setVariables: Dispatch<SetStateAction<Variables>>;
+  variables: SearchRepositoriesQueryVariables;
+  setVariables: Dispatch<SetStateAction<SearchRepositoriesQueryVariables>>;
 };
 
 const Form: FC<Props> = ({ variables, setVariables }) => {

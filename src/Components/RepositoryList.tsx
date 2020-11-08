@@ -1,37 +1,34 @@
 import React, { FC, memo } from 'react';
 import { StarButton } from './index';
-import { Variables } from './View';
+import { SearchRepositoriesQueryVariables } from '../client/gen/graphql-client-api';
+import { Edges } from '../@types/graphql';
 
 type Props = {
-  variables: Variables;
-  edges: any[];
-};
-export type Node = {
-  id: string;
-  name: string;
-  stargazers: {
-    totalCount: number;
-    __typename: string;
-  };
-  url: string;
-  viewerHasStarred: boolean;
-  __typename: string;
+  variables: SearchRepositoriesQueryVariables;
+  edges: Edges;
 };
 
 const RepositoryList: FC<Props> = ({ variables, edges }) => (
   <ul>
-    {edges.map((edge: any) => {
-      const node: Node = edge.node;
-      return (
-        <li key={node.id}>
-          <a href={node.url} target="_blank" rel="noreferrer noopener">
-            {node.name}
-          </a>
-          -
-          <StarButton variables={variables} node={node} />
-        </li>
-      );
-    })}
+    {edges
+      ? edges.map((edge) => {
+          const node = edge?.node;
+
+          // TODO: もっとイケてる型にしたい
+          if (node?.__typename === 'Repository') {
+            return (
+              <li key={node.id}>
+                <a href={node.url} target="_blank" rel="noreferrer noopener">
+                  {node.name}
+                </a>
+                -
+                <StarButton variables={variables} node={node} />
+              </li>
+            );
+          }
+          return null;
+        })
+      : null}
   </ul>
 );
 

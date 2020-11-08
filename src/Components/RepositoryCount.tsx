@@ -1,7 +1,7 @@
 import React, { FC, memo, useMemo } from 'react';
 
 type Props = {
-  repositoryCount: number;
+  repositoryCount: number | undefined;
 };
 
 const RepositoryCount: FC<Props> = ({ repositoryCount }) => {
