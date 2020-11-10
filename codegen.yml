@@ -5,7 +5,7 @@ documents:
   - ./graphql/queries/*.graphql
   - ./graphql/mutations/*.graphql
 generates:
-  ./client/gen/graphql-client-api.tsx:
+  ./src/client/gen/graphql-client-api.tsx:
     plugins:
       - typescript
       - typescript-operations
@@ -17,3 +17,6 @@ generates:
   ./graphql/schema.json:
     plugins:
       - introspection
+hooks:
+  afterAllFileWrite:
+    - prettier --write src/client/gen/graphql-client-api.tsx
